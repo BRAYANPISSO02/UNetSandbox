@@ -1,0 +1,42 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode y caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Pesos, checkpoints y modelos exportados
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Datos y datasets médicos pesados
+data/
+datasets/
+*.zip
+*.tar.gz
+
+# Logs y herramientas de seguimiento de experimentos
+wandb/
+runs/
+lightning_logs/
+*.log
+
+# Entornos interactivos y notebooks
+.ipynb_checkpoints/
+
+# Editores e IDEs
+.vscode/
+.idea/
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
