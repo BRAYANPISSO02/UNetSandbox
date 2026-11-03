@@ -11,10 +11,8 @@ Implementación limpia, autocontenida y sin sobreingeniería de la arquitectura 
 4. [Relación con Arquitecturas Previas](#4-relación-con-arquitecturas-previas)
 5. [¿Qué es "UUNet" ($U^2$-Net) y Otras Variantes?](#5-qué-es-uunet-u2-net-y-otras-variantes)
 6. [Decisiones de Implementación en este Proyecto](#6-decisiones-de-implementación-en-este-proyecto)
-7. [Estructura del Código](#7-estructura-del-código)
-8. [Guía de Ejecución Rápida](#8-guía-de-ejecución-rápida)
-9. [Batería de Pruebas Unitarias](#9-batería-de-pruebas-unitarias)
-10. [Resultados y Métricas del Modelo](#10-resultados-y-métricas-del-modelo)
+7. [Batería de Pruebas Unitarias](#7-batería-de-pruebas-unitarias)
+8. [Resultados y Métricas del Modelo](#8-resultados-y-métricas-del-modelo)
 
 ---
 
@@ -154,70 +152,7 @@ $$\mathcal{L}_{\text{Total}} = 0.5 \cdot \mathcal{L}_{\text{BCE}} + 0.5 \cdot \m
 
 ---
 
-## 7. Estructura del Código
-
-El repositorio está organizado deliberadamente de forma compacta y legible:
-
-```
-UNetSandbox/
-├── model.py            # Definición limpia de DoubleConv, Down, Up y UNet en PyTorch
-├── dataset.py          # Generador biomédico sintético (células/lesiones) y cargador de carpetas reales
-├── train.py            # Bucle de entrenamiento, DiceLoss, BCEDiceLoss y cálculo de IoU
-├── predict.py          # Inferencia, métricas de prueba y generación visual comparativa
-├── test_unet.py        # Suite de pruebas unitarias (shapes, gradientes, límites de loss)
-└── README.md           # Este documento de referencia conceptual y metodológica
-```
-
----
-
-## 8. Guía de Ejecución Rápida
-
-El proyecto es **100% reproducible y autocontenido**: incluye un generador sintético que simula imágenes celulares y gradientes de atenuación, por lo que no es obligatorio descargar datasets externos para probarlo.
-
-### 1. Ejecutar las Pruebas Unitarias
-Valida la integridad de las dimensiones de los tensores, el flujo de gradientes hacia atrás y los límites de la función de pérdida:
-```bash
-python3 test_unet.py
-```
-
-### 2. Entrenar el Modelo
-Entrena la red durante 10 épocas guardando el mejor checkpoint en `checkpoints/best_model.pth`:
-```bash
-python3 train.py --epochs 10 --batch-size 8 --lr 0.001
-```
-
-### 3. Ejecutar Inferencia y Ver Resultados
-Carga el modelo entrenado y genera una visualización en 4 paneles (`prediction_sample.png`) comparando:
-* Entrada original
-* Máscara real (*Ground Truth*)
-* Mapa continuo de probabilidades
-* Predicción binaria umbralizada
-
-```bash
-python3 predict.py --checkpoint checkpoints/best_model.pth --output prediction_sample.png
-```
-
-### 4. Uso con Datos Médicos Propios (Opcional)
-Si querés evaluar la red con datos reales (como ISIC, DRIVE o EM Segmentation), organizá tu carpeta de la siguiente forma:
-
-```
-data/
-├── train/
-│   ├── images/   (e.g. img001.png, img002.png)
-│   └── masks/    (e.g. img001.png, img002.png con valores 0 o 255)
-└── val/
-    ├── images/
-    └── masks/
-```
-
-Y ejecutá:
-```bash
-python3 train.py --data-dir data/ --epochs 30
-```
-
----
-
-## 9. Batería de Pruebas Unitarias
+## 7. Batería de Pruebas Unitarias
 
 El archivo `test_unet.py` implementa una suite rigurosa construida con `unittest` para verificar el correcto funcionamiento arquitectónico, matemático y de flujos de datos antes de entrenar:
 
@@ -246,7 +181,7 @@ OK
 
 ---
 
-## 10. Resultados y Métricas del Modelo
+## 8. Resultados y Métricas del Modelo
 
 ### A. Rendimiento del Checkpoint Actual (`checkpoints/best_model.pth`)
 
